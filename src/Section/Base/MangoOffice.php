@@ -272,7 +272,7 @@ Class MangoOffice {
      *
      * @return array|bool
      */
-    function getStat($date_from, $date_to, $from = 0, $from_number = null, $to = null, $to_number = null, $fields = null, $request_id = null) {
+    function getStat($date_from, $date_to, $from = null, $from_number = null, $to = null, $to_number = null, $fields = null, $request_id = null) {
 
         $data = [
             'date_from' => Carbon::parse($date_from)->timestamp,
