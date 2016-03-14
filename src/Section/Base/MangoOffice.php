@@ -329,6 +329,71 @@ Class MangoOffice {
     }
 
     /**
+     * Get Recording GET download URL
+     * fast-need
+     * @TODO Create Recordings object and in stats return array of them
+     *
+     * @param string $recordID - Recod ID from statictic result
+     * @return string GET URL for record.
+     */
+    public function getRecordingDownloadUrl($recordID)
+    {
+        $method = 'queries/recording/post/';
+        $data   = [
+            'recording_id'  => $recordID,
+            'action'        => 'download',
+        ];
+
+        $post = [
+            'vpbx_api_key' => $this->vpbx_api_key,
+            'sign'         => $this->getSign($data),
+            'json'         => json_encode($data, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+        ];
+
+        $url   = $this->mango_base_url . $method;
+        $query = http_build_query($post);
+        if (0) {
+            /**
+             * FILE GET CONTENTS
+             */
+            $opts    = [
+                'http' => [
+                    'method'  => 'POST',
+                    'header'  => 'Content-type: application/x-www-form-urlencoded',
+                    'content' => $query
+                ]
+            ];
+            $context = stream_context_create($opts);
+            $data    = @file_get_contents($url, false, $context);
+            var_dump($data);
+            if (!$data) {
+                return false;
+            }
+        }
+        else {
+            /**
+             * CURL
+             */
+
+            var_dump($url);
+            var_dump($query);
+            if ($curl = curl_init()) {
+                curl_setopt($curl, CURLOPT_URL, $url);
+                curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curl, CURLOPT_POST, true);
+                curl_setopt($curl, CURLOPT_POSTFIELDS, $query);
+                curl_setopt($curl, CURLOPT_HEADER, TRUE);
+                curl_setopt($curl, CURLOPT_FOLLOWLOCATION, FALSE);
+                $data = curl_exec($curl);
+                curl_close($curl);
+            }
+        }
+
+        preg_match('/Location:(?P<location>.*)/mi', $data, $matches);
+        return $matches['location'];
+    }
+
+    /**
      * Преобразование CSV файла в массив из данных переданных в $fields
      *
      * @param $info

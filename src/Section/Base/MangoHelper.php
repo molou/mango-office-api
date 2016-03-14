@@ -14,6 +14,7 @@ use Sharoff\Mango\Api\MangoOffice;
  * @method static MangoOffice sendCall($from, $to_number, $number = null, $command_id = null)
  * @method static MangoOffice sendCallHangup($command_id, $call_id)
  * @method static MangoOffice getStat($date_from, $date_to, $from = null, $from_number = null, $to = null, $to_number = null, $fields = null, $request_id = null)
+ * @method static MangoOffice getRecordingDownloadUrl($recordID)
  *
  * @package Sharoff\Mango\Api\Base
  */
