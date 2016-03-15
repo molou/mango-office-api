@@ -214,7 +214,6 @@ Class MangoOffice {
             ];
             $context = stream_context_create($opts);
             $data    = @file_get_contents($url, false, $context);
-            var_dump($data);
             if (!$data) {
                 return false;
             }
@@ -365,7 +364,6 @@ Class MangoOffice {
             ];
             $context = stream_context_create($opts);
             $data    = @file_get_contents($url, false, $context);
-            var_dump($data);
             if (!$data) {
                 return false;
             }
@@ -374,9 +372,6 @@ Class MangoOffice {
             /**
              * CURL
              */
-
-            var_dump($url);
-            var_dump($query);
             if ($curl = curl_init()) {
                 curl_setopt($curl, CURLOPT_URL, $url);
                 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
